@@ -1,3 +1,21 @@
+cls :- write('\e[H\e[2J').
+
+leInteiro(N) :- read_line_to_codes(user_input, A3),
+				string_to_atom(A3,A12),
+				atom_number(A12,N).
+				
+leString(S) :- read_line_to_codes(user_input, P2),
+			   string_to_atom(P2,P1),
+			   atom_string(P1,S).
+
+imprimeMatriz([]) :- nl.
+imprimeMatriz(H|T) :- S is separaLetras(H),
+					  write("                 "), write(S), nl,
+					  imprimeMatriz(T).
+
+separaLetras([P], [R]) :- string_concat(P, " ", R).
+separaLetras([P|Ps], [R|Rs]) :- string_concat(P, " ", R), separaLetras(Ps, Rs).
+								 
 
 :- initialization main.
 
@@ -17,11 +35,9 @@ main :-
 	write(""), nl,
 	write("Digite as palavras seguidas de um enter: "), nl,
 	
-	/*?- random(0, 9999, X).  gera numero aleatorio
+	/*?-random(0, 9999, X), .  gera numero aleatorio
 	
 	le primeira palavra*/
-	read_line_to_codes(user_input, P2),
-	string_to_atom(P2,P1),
-	atom_string(P1,P),
-	write(P),nl.
-	
+	string_chars("abracadabra", Lista),
+	separaLetras(Lista, Separado),
+	write(Separado),nl,
