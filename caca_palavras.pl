@@ -8,14 +8,13 @@ leString(S) :- read_line_to_codes(user_input, P2),
 			   string_to_atom(P2,P1),
 			   atom_string(P1,S).
 
-imprimeMatriz([]) :- nl.
-imprimeMatriz(H|T) :- S is separaLetras(H),
-					  write("                 "), write(S), nl,
-					  imprimeMatriz(T).
+--imprimeMatriz([]) :- nl.
+--imprimeMatriz(H|T) :- S is separaLetras(H), write("                 "), write(S), nl, imprimeMatriz(T).
 
-separaLetras([P], [R]) :- string_concat(P, " ", R).
-separaLetras([P|Ps], [R|Rs]) :- string_concat(P, " ", R), separaLetras(Ps, Rs).
+--separaLetras([P], [R]) :- string_concat(P, " ", R).
+--separaLetras([P|Ps], [R|Rs]) :- string_concat(P, " ", R), separaLetras(Ps, Rs).
 								 
+
 
 :- initialization main.
 
