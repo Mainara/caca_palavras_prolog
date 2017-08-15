@@ -1,5 +1,11 @@
 cls :- write('\e[H\e[2J').
 
+insere(X, L, [X|L]).
+
+insereFim(N, [], [N]).
+insereFim(T, [H], L) :- insere(H, [T], L).
+insereFim(N, [H|T], L) :- insereFim(N, T, X), insere(H, X, L).
+
 leInteiro(N) :- read_line_to_codes(user_input, A3),
 				string_to_atom(A3,A12),
 				atom_number(A12,N).
@@ -8,14 +14,29 @@ leString(S) :- read_line_to_codes(user_input, P2),
 			   string_to_atom(P2,P1),
 			   atom_string(P1,S).
 
-imprimeMatriz([]) :- nl.
-imprimeMatriz(H|T) :- S is separaLetras(H),
-					  write("                 "), write(S), nl,
-					  imprimeMatriz(T).
+cacaPalavras(["","","","","","","","","",""]).
 
-separaLetras([P], [R]) :- string_concat(P, " ", R).
-separaLetras([P|Ps], [R|Rs]) :- string_concat(P, " ", R), separaLetras(Ps, Rs).
-								 
+replace(_, _, [], []).
+replace(O, R, [O|T], [R|T2]) :- replace(O, R, T, T2).
+replace(O, R, [H|T], [H|T2]) :- H \= O, replace(O, R, T, T2).
+
+letraAleatoria(L) :- random(0,25,X),
+					 nth0(X,['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'], L).  
+
+
+preencheString(Palavra, 10, Palavra).
+preencheString(Palavra, Tamanho, Modificada) :- letraAleatoria(L), string_concat(Palavra, L, X), Z is Tamanho +1, preencheString(X, Z, Modificada).
+
+preencheMatriz([], R):-!.
+preencheMatriz([H|T], R) :-
+	string_chars(H, H1),
+	length(H1, Y),
+	preencheString(H, Y, R),
+	preencheMatriz(T,[R]).
+						 
+vertical(_, _, "", _, MatrizResultante).
+vertical(I, J, Palavra, Matriz, MatrizResultante) :- write("OK").
+
 
 :- initialization main.
 
@@ -37,7 +58,8 @@ main :-
 	
 	/*?-random(0, 9999, X), .  gera numero aleatorio
 	
-	le primeira palavra*/
-	string_chars("abracadabra", Lista),
-	separaLetras(Lista, Separado),
-	write(Separado),nl,
+	*/
+	
+	cacaPalavras(X),
+	preencheMatriz(X, L),
+	write(L).
