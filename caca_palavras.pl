@@ -8,11 +8,21 @@ leString(S) :- read_line_to_codes(user_input, P2),
 			   string_to_atom(P2,P1),
 			   atom_string(P1,S).
 
---imprimeMatriz([]) :- nl.
---imprimeMatriz(H|T) :- S is separaLetras(H), write("                 "), write(S), nl, imprimeMatriz(T).
+desenhaLinha([]).
+desenhaLinha([H|T]) :- write(H), write(" "), desenhaLinha(T).
 
---separaLetras([P], [R]) :- string_concat(P, " ", R).
---separaLetras([P|Ps], [R|Rs]) :- string_concat(P, " ", R), separaLetras(Ps, Rs).
+
+desenhaMatriz([]). 
+desenhaMatriz([H|T]) :-string_chars(H, ArrayCharH), 
+ 		     desenhaLinha(ArrayCharH), 
+		     nl, 
+		     desenhaMatriz(T).
+
+
+matriz(["abc", "def"]).
+
+/** vai ficar [['a', 'b', 'c']]**/
+
 								 
 
 
@@ -34,9 +44,9 @@ main :-
 	write(""), nl,
 	write("Digite as palavras seguidas de um enter: "), nl,
 	
-	/*?-random(0, 9999, X), .  gera numero aleatorio
+	/*?-random(0, 9999, X), .  gera numero aleatoriole primeira palavra*/
 	
-	le primeira palavra*/
-	string_chars("abracadabra", Lista),
-	separaLetras(Lista, Separado),
-	write(Separado),nl,
+	matriz(Matriz),
+	desenhaMatriz(Matriz), nl.
+
+	
