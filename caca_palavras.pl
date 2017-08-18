@@ -46,7 +46,41 @@ diagonal(ContLinha,[M|Mt],[P|Ps],ContLinha,Coluna,[Palavra|X]):-
 diagonal(ContLinha,[M|Mt],[P|Ps],Linha,Coluna,[M|X]):- 
 	N is ContLinha +1,
 	diagonal(N,Mt,[P|Ps],Linha,Coluna,X).
+
+horizontal(_,[M|Mt],[],_,_,[M|Mt]).
+horizontal(ContLinha,[M|Mt],[P|Ps],ContLinha,Coluna,X):-
+	string_chars(M,Lista),
+	adicionaElemento(0,Lista,P,Coluna,ListaRetorno),
+	N is Coluna + 1,
+	string_chars(Palavra,ListaRetorno),
+	horizontal(ContLinha,[Palavra|Mt],Ps,ContLinha,N,X).
 	
+horizontal(ContLinha,[M|Mt],[P|Ps],Linha,Coluna,[M|X]):- 
+	N is ContLinha +1,
+	horizontal(N,Mt,[P|Ps],Linha,Coluna,X).
+
+verificaHorizontal(_,_,_,0,'P').
+verificaHorizontal(_,10,_,_,'N').
+verificaHorizontal(Linha,Coluna,M,Tamanho,Retorno):-
+	nth0(Linha,M, Palavra),
+	string_chars(Palavra,Lista),
+	nth0(Coluna,Lista,'1') -> J is Coluna +1, T is Tamanho -1, verificaHorizontal(Linha,J,M,T,Retorno); Retorno = 'N'.
+	
+verificaVertical(_,_,_,0,'P').
+verificaVertical(_,10,_,_,'N').
+verificaVertical(Linha,Coluna,M,Tamanho,Retorno):-
+	nth0(Linha,M, Palavra),
+	string_chars(Palavra,Lista),
+	nth0(Coluna,Lista,'1') -> I is Linha +1, T is Tamanho -1, verificaVertical(I,Coluna,M,T,Retorno); Retorno = 'N'.
+
+verificaDiagonal(_,_,_,0,'P').
+verificaDiagonal(_,10,_,_,'N').
+verificaDiagonal(Linha,Coluna,M,Tamanho,Retorno):-
+	nth0(Linha,M, Palavra),
+	string_chars(Palavra,Lista),
+	nth0(Coluna,Lista,'1') -> I is Linha + 1, J is Coluna + 1, T is Tamanho - 1, verificaDiagonal(I,J,M,T,Retorno); Retorno = 'N'.
+
+
 :- initialization main.
 
 main :-
@@ -70,6 +104,8 @@ main :-
 	*/
 	
 	cacaPalavras(X),
-	write(X),nl,
+	verificaDiagonal(0,3,X,4,T1),
 	diagonal(0,X,['F','O','G','O'],0,3,R),
-	write(R).
+	verificaDiagonal(0,3,R,4,T),
+	write(T1),
+	write(T).
