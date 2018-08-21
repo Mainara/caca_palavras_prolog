@@ -4,7 +4,7 @@ No arquivo *caca_palavras.pl* está a implementação em prolog de um caça pala
 
 Passos para executar o arquivo:
 
-``swipl``
+``swipl`` </br>
 ``consult('caca_palavras.pl').``
 
 As instruções para jogar são informadas no início do jogo.
