@@ -234,6 +234,8 @@ main :-
 	
 	write("As palavras foram escondidas no caça palavras abaixo!"),nl,
 	write(""),nl,
+	write("CAÇA PALAVRAS"),nl,
+	write(""),nl,
 	desenhaMatriz(CPF),
 	write(""),nl,
 	write("Agora que as palavras foram escondidas, você deve procurá-las digitando os "),nl,
